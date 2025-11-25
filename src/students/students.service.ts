@@ -45,9 +45,8 @@ export class StudentsService
    async findByGender(gender: string) {
     const query = `
     select * From students where gender=?`;
-    const result = await this.repo.query(query,[gender])
+    return await this.repo.query(query,[gender])
   
-    return result
    }
 
 async create(dto: StudentDto) {

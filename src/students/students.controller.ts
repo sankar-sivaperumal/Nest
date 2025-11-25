@@ -18,7 +18,7 @@ export class StudentsController {
     return  await this.svc.findAll();
   }
 
-  @Get('query')
+  @Get()
    async findByGender(@Query('gender') gender: string) {
     return await this.svc.findByGender(gender);
   } 

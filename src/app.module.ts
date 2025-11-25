@@ -7,6 +7,9 @@ import { EnrollmentsModule } from './enrollments/enrollments.module';
 import { Student } from './students/student.entity';
 import { Course } from './courses/courses.entity';
 import { Enrollment } from './enrollments/enrollments.entity';
+import { StudentsServices } from './students/students form/newstudent.service';
+import { StudentsControllers } from './students/students form/new students.controller';
+
 
 @Module({
   imports: [
@@ -33,7 +36,7 @@ import { Enrollment } from './enrollments/enrollments.entity';
     }),
     StudentsModule,
     CoursesModule,
-    EnrollmentsModule,
+    EnrollmentsModule
   ],
 })
 export class AppModule {}
