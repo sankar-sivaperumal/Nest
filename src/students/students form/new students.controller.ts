@@ -13,9 +13,7 @@ export class StudentsControllers {
   create(
     @Body() createStudentDto: StudentDto,
     @UploadedFiles() files: Express.Multer.File[],
-  ) {
-    console.log('Received DTO:', createStudentDto); 
-    console.log('Received files:', files);         
+  ) {       
     return this.studentsServices.create(createStudentDto);
   }
 }
