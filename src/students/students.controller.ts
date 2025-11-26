@@ -3,6 +3,7 @@ import { StudentsService } from './students.service';
 import { StudentDto } from './dto/student.dto';
 import { updatestd } from './dto/patch.dto'
 import type { Response } from 'express';
+import { Student } from './student.entity';
 
 
 
@@ -14,20 +15,16 @@ export class StudentsController {
 
   @Get()
   async findAll(): Promise<StudentDto> {
-    // console.log(Get);
     return  await this.svc.findAll();
   }
+ 
 
-  @Get('Gender')
+  @Get()
    async findByGender(@Query('gender') gender: string) {
+    console.log('gender')
     return await this.svc.findByGender(gender);
   } 
-  
-/*   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.svc.findOne(+id);
-  }
-*/
+ 
 
   @Get(':id')
   async findOne(@Param('id') id: string, @Res() res: Response) {
@@ -46,7 +43,6 @@ export class StudentsController {
 
  @Post()
   async create(@Body() students: StudentDto) { 
-    // console.log(students);
       return await this.svc.create(students);
   }
 
@@ -56,18 +52,10 @@ export class StudentsController {
     }
 
 
-@Patch(':id')
-      update(@Param('id') id: string, @Body() dto: updatestd) {
-     return this.svc.update(+id, dto);
-     }
-    
-//   @Patch(':id')  
-//   async update(@Param('id') id: string, @Body() dto: updatestd) 
-//   {
-//     // console.log(Patch)
-//   return  await this.svc.update(+id, dto);
-// }
-
+  @Patch(':id')
+    async update(@Param('id') id: string, @Body() dto: updatestd) {
+    return await  this.svc.update(+id, dto);
+  }
 
   @Delete(':id')
 async  remove(@Param('id') id: string) {
