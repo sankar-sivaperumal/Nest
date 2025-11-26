@@ -29,7 +29,6 @@ export class StudentsService
 
 
 
-
   async findOne(id: number) {
     const query = `
       SELECT s.*, e.enrollment_id, e.marks
