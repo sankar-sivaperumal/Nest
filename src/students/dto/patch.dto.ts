@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsOptional, IsString, IsInt, IsDateString, IsDecimal, IsNumber,IsNotEmpty } from 'class-validator';
 import { Enrollment } from 'src/enrollments/enrollments.entity';
 
@@ -23,13 +24,18 @@ export class updatestd {
   @IsDateString()
   date_of_birth: string;
 
-    @IsInt()
-    @IsOptional()
-    enrollement_id:number;
+  @IsInt()
+  @IsOptional()
+  enrollement_id:number;
   
-   
-    @IsNumber()
-    marks: number;
+  @Type(() => Number)
+  @IsOptional()
+  @IsNumber()
+  marks: number;
+
+  @IsOptional()
+  @IsInt()
+  course_id:number;
 
 }
 
