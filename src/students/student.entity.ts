@@ -23,6 +23,10 @@ export class Student {
   date_of_birth: Date;
 
 
+  // @Column('simple-array', { nullable: true })
+  // files: string[];
+
+
   @OneToMany(() => Enrollment, (enr: Enrollment) => enr.students)
 enrollments: Enrollment[];
 
