@@ -13,10 +13,10 @@ export class StudentsController {
    private readonly svc: StudentsService){}
  
 
-  @Get()
-  async findAll(): Promise<StudentDto> {
-    return  await this.svc.findAll();
-  }
+  // @Get()
+  // async findAll(): Promise<StudentDto> {
+  //   return  await this.svc.findAll();
+  // }
  
 
   @Get()
