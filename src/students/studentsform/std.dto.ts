@@ -40,5 +40,9 @@ export class stddto {
     @IsOptional()
     @IsDecimal()    
     marks: number;
+
+    
+    @IsString({ each: true })
+    files:string[]
  }
 
