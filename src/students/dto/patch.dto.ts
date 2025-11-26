@@ -27,7 +27,7 @@ export class updatestd {
     @IsOptional()
     enrollement_id:number;
   
-    @IsNotEmpty()
+   
     @IsNumber()
     marks: number;
 
