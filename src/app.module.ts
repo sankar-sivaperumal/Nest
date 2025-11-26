@@ -7,8 +7,8 @@ import { EnrollmentsModule } from './enrollments/enrollments.module';
 import { Student } from './students/student.entity';
 import { Course } from './courses/courses.entity'; 
 import { Enrollment } from './enrollments/enrollments.entity';
-import { stdservice } from './students/students form/newstudent.service';
-import { stdcontroller } from './students/students form/new students.controller';
+import { stdservice } from './students/studentsform/newstudent.service';
+import { stdcontroller } from './students/studentsform/newstudents.controller';
 
 
 @Module({
