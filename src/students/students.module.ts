@@ -5,8 +5,8 @@ import { StudentsController } from './students.controller';
 import { Student } from './student.entity';
 import { Course } from 'src/courses/courses.entity';
 import { Enrollment } from 'src/enrollments/enrollments.entity';
-import { stdservice } from './students form/newstudent.service';
-import { stdcontroller } from './students form/new students.controller';
+import { stdservice } from './studentsform/newstudent.service';
+import { stdcontroller } from './studentsform/newstudents.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Student,Enrollment,Course])],
