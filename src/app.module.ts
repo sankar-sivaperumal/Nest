@@ -9,7 +9,8 @@ import { Course } from './courses/courses.entity';
 import { Enrollment } from './enrollments/enrollments.entity';
 import { stdservice } from './students/studentsform/newstudent.service';
 import { stdcontroller } from './students/studentsform/newstudents.controller';
-
+import { fileservice } from './students/uploads/file.service';
+import { filecontroller } from './students/uploads/file.controller';
 
 @Module({
   imports: [
