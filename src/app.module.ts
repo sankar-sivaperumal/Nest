@@ -7,8 +7,8 @@ import { EnrollmentsModule } from './enrollments/enrollments.module';
 import { Student } from './students/student.entity';
 import { Course } from './courses/courses.entity'; 
 import { Enrollment } from './enrollments/enrollments.entity';
-import { StudentsServices } from './students/students form/newstudent.service';
-import { StudentsControllers } from './students/students form/new students.controller';
+import { stdservice } from './students/students form/newstudent.service';
+import { stdcontroller } from './students/students form/new students.controller';
 
 
 @Module({
@@ -30,7 +30,7 @@ import { StudentsControllers } from './students/students form/new students.contr
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
         entities: [Student, Course, Enrollment],
-        synchronize: false, 
+        synchronize: true, 
       }),
       inject: [ConfigService],
     }),
