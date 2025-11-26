@@ -37,10 +37,11 @@ export class StudentDto {
     @IsString()
     teacher_name: string;
 
-    @Type(() => Number)
+   
     @IsOptional()
     @IsDecimal()
     marks: number;
+   
 }
 
   
