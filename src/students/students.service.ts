@@ -28,6 +28,8 @@ export class StudentsService
   }
 
 
+
+
   async findOne(id: number) {
     const query = `
       SELECT s.*, e.enrollment_id, e.marks
@@ -40,19 +42,16 @@ export class StudentsService
     return result[0];
   }
 
-
-  
    async findByGender(gender: string) {
     const query = `
     select * From students where gender=?`;
     return await this.repo.query(query,[gender])
-     }
+    }
 
-   
+  
 async create(dto: StudentDto) {
   if (!dto.course_id) {
-    
-    throw new Error('Course ID must be provided ID Must Be 101 - 105 ');
+        throw new Error('Course ID must be provided ID Must Be 101 - 105 ');
   }
   const { insertId: student_id } = await this.repo.query(
     `INSERT INTO students (name, age, gender, city, date_of_birth) VALUES (?, ?, ?, ?, ?)`,
@@ -75,24 +74,30 @@ async create(dto: StudentDto) {
   return { student_id, enrollments: [{ enrollment_id, marks: dto.marks }], courses };
 }
 
-     //Patch method
-async update(id: number, dto:updatestd) {
+// patch method
+async update(id: number, dto: Partial<updatestd>) {
+  return this.repo.update(id, dto); 
+}
+
+/* //Patch method
+    async update(id: number, dto:updatestd) {
     const query = `
-  UPDATE students
-  SET name = ?,age = ?, gender = ?, city = ?, date_of_birth = ? 
-  WHERE student_id = ?;
-`;
+    UPDATE students
+    SET name = ?,age = ?, gender = ?, city = ?, date_of_birth = ? 
+    WHERE student_id = ?;
+    `;
     return this.repo.query(query, [
-      dto.name,
-      dto.age,
-      dto.gender,
-      dto.city,
-      dto.date_of_birth,
-
-    ]);
+    dto.name,
+    dto.age,
+    dto.gender,
+    dto.city,
+    dto.date_of_birth,
+    id,
+   ]);
   }
-
-   // Put method
+*/
+   
+// Put method
   async updates(id: number, dto: StudentDto) {
   const query = `
     UPDATE students
@@ -106,7 +111,6 @@ async update(id: number, dto:updatestd) {
     dto.gender,
     dto.city,
     dto.date_of_birth,
-    
     id,
   ]);
 }
