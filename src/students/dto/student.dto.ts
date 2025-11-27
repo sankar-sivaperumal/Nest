@@ -22,7 +22,7 @@ export class StudentDto {
 
     @IsNotEmpty()
     @IsDateString()
-    date_of_birth: string; 
+    dob: string; 
 
     @Type(() => Number)
     @IsOptional()
