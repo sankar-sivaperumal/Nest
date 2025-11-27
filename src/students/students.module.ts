@@ -9,11 +9,13 @@ import { stdservice } from './studentsform/newstudent.service';
 import { stdcontroller } from './studentsform/newstudents.controller';
 import { fileservice } from './uploads/file.service';
 import { filecontroller } from './uploads/file.controller';
+import { UserController } from 'src/students/Users/user.controller';
+import { UserService } from 'src/students/Users/user.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Student,Enrollment,Course])],
-  providers: [StudentsService,stdservice,fileservice],
-  controllers: [StudentsController,stdcontroller,filecontroller],
+  providers: [StudentsService,stdservice,fileservice,UserService],
+  controllers: [StudentsController,stdcontroller,filecontroller,UserController],
   exports: [StudentsService],
 })
   
