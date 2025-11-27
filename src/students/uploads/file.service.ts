@@ -16,7 +16,11 @@ export class fileservice {
   if (!student) {
     throw new Error('Student not found');
   }
+  // if (files && files.length > 0) {
+  //   student.files = files.map(file => file.path);
+  // }
   student.files = files.map(file => file.filename);
+  console.log(files)
   return this.stdrepo.save(student);
 }
 
