@@ -12,12 +12,18 @@ export class stdservice {
     @InjectRepository(Student)
     private stdrepo: Repository<Student>,
   ) {}
-
-async create(createStudentDto: stddto) {
+  
+  async create(createStudentDto: stddto) {
   const student = this.stdrepo.create(createStudentDto);
   return this.stdrepo.save(student);
 }
 findAll() {
     return this.stdrepo.find();
   }
+
 }
+
+
+
+
+
