@@ -1,6 +1,6 @@
 
 import { Type } from "class-transformer";
-import { IsInt, IsNotEmpty, IsString, IsDateString, IsOptional, IsDecimal } from "class-validator";
+import { IsInt, IsNotEmpty, IsString, IsDateString, IsOptional, IsDecimal, IsArray } from "class-validator";
 
 
 export class stddto {
@@ -21,27 +21,27 @@ export class stddto {
 
    
     @IsDateString()
-    date_of_birth: string; 
+    dob: string; 
 
     @Type(() => Number)
     @IsOptional()
     @IsInt()
     course_id: number;
 
-    @IsOptional()
-    @IsString()
-    course_name: string;
+    // @IsOptional()
+    // @IsString()
+    // course_name: string;
 
-    @IsOptional()
-    @IsString()
-    teacher_name: string;
+    // @IsOptional()
+    // @IsString()
+    // teacher_name: string;
 
 
     @IsOptional()
     @IsDecimal()    
     marks: number;
 
-    
+    @IsOptional()
     @IsString({ each: true })
     files:string[]
  }
