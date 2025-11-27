@@ -10,17 +10,15 @@ import type { Response } from 'express';
 export class StudentsController {
   constructor(
    private readonly svc: StudentsService){}
- 
-
    
   @Get()
   async findAll(): Promise<StudentDto> {
     return  await this.svc.findAll();
   }
 
-  @Get()
+  @Get('gender')
    async findByGender(@Query('gender') gender: string) {
-    console.log('gender')
+  
     return await this.svc.findByGender(gender);
   } 
 
