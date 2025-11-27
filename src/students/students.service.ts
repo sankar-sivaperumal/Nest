@@ -27,6 +27,18 @@ export class StudentsService
     return this.repo.query(query);
   }
 
+// async findAll(gender?: string) {
+   
+//     let query = `
+//       SELECT s.*, e.enrollment_id, e.marks
+//       FROM students s
+//       LEFT JOIN enrollments e ON e.student_id = s.student_id
+//     `;
+//     if (gender) {
+//       query += ` WHERE s.gender = ?`;  
+//     }
+//     return await this.repo.query(query, gender ? [gender] : []);
+//   }
 
 
   async findOne(id: number) {
@@ -47,7 +59,7 @@ export class StudentsService
     return await this.repo.query(query,[gender])
     }
 
-  
+
 async create(dto: StudentDto) {
   if (!dto.course_id) {
         throw new Error('Course ID must be provided ID Must Be 101 - 105 ');
@@ -79,7 +91,7 @@ async update(id: number, dto: Partial<updatestd>) {
 }
 
 /* //Patch method
-    async update(id: number, dto:updatestd) {
+  async update(id: number, dto:updatestd) {
     const query = `
     UPDATE students
     SET name = ?,age = ?, gender = ?, city = ?, date_of_birth = ? 
