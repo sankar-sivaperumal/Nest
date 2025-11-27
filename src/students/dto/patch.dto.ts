@@ -22,7 +22,7 @@ export class updatestd {
 
   @IsOptional()
   @IsDateString()
-  date_of_birth: string;
+  dob: string;
 
   @IsInt()
   @IsOptional()
