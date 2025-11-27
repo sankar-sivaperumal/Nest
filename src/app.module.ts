@@ -11,6 +11,9 @@ import { stdservice } from './students/studentsform/newstudent.service';
 import { stdcontroller } from './students/studentsform/newstudents.controller';
 import { fileservice } from './students/uploads/file.service';
 import { filecontroller } from './students/uploads/file.controller';
+import { UserController } from './students/Users/user.controller';
+import { UserService } from './students/Users/user.service';
+import { UserModule } from './students/Users/user.module';
 
 @Module({
   imports: [
@@ -37,7 +40,8 @@ import { filecontroller } from './students/uploads/file.controller';
     }),
     StudentsModule,
     CoursesModule,
-    EnrollmentsModule
+    EnrollmentsModule,
+    UserModule
   ],
 })
 export class AppModule {}
