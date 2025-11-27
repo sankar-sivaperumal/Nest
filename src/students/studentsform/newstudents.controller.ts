@@ -1,5 +1,7 @@
 import { Controller, Post, Body, UseInterceptors, UploadedFiles, UsePipes, ValidationPipe } from '@nestjs/common';
-import { AnyFilesInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { AnyFilesInterceptor, FilesInterceptor 
+  
+} from '@nestjs/platform-express';
 import { stdservice } from './newstudent.service';
 import { stddto } from './std.dto';
 
