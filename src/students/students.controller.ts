@@ -3,7 +3,6 @@ import { StudentsService } from './students.service';
 import { StudentDto } from './dto/student.dto';
 import { updatestd } from './dto/patch.dto'
 import type { Response } from 'express';
-import { Student } from './student.entity';
 
 
 
@@ -13,18 +12,17 @@ export class StudentsController {
    private readonly svc: StudentsService){}
  
 
-  // @Get()
-  // async findAll(): Promise<StudentDto> {
-  //   return  await this.svc.findAll();
-  // }
- 
+   
+  @Get()
+  async findAll(): Promise<StudentDto> {
+    return  await this.svc.findAll();
+  }
 
   @Get()
    async findByGender(@Query('gender') gender: string) {
     console.log('gender')
     return await this.svc.findByGender(gender);
   } 
- 
 
   @Get(':id')
   async findOne(@Param('id') id: string, @Res() res: Response) {
