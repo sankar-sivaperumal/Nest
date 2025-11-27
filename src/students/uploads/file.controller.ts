@@ -15,3 +15,5 @@ export class filecontroller {
     return this.filesvc.updateFiles(Number(id), files);
   }
 }
+
+
