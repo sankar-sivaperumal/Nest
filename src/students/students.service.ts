@@ -62,11 +62,16 @@ export class StudentsService
 
 async create(dto: StudentDto) {
   if (!dto.course_id) {
-        throw new Error('Course ID must be provided ID Must Be 101 - 105 ');
+        throw new Error(`Course ID must be provided ID Must Be (101 - 105 )
+          101 - "Maths",
+          102 -"Physics",
+          103 -"Chemistry",
+          104 -"Computer Science",
+          105 - "English"`);
   }
   const { insertId: student_id } = await this.repo.query(
-    `INSERT INTO students (name, age, gender, city, date_of_birth) VALUES (?, ?, ?, ?, ?)`,
-    [dto.name, dto.age, dto.gender, dto.city, dto.date_of_birth]
+    `INSERT INTO students (name, age, gender, city, dob) VALUES (?, ?, ?, ?, ?)`,
+    [dto.name, dto.age, dto.gender, dto.city, dto.dob]
   );
 
   const { insertId: enrollment_id } = await this.epo.query(
@@ -94,7 +99,7 @@ async update(id: number, dto: Partial<updatestd>) {
   async update(id: number, dto:updatestd) {
     const query = `
     UPDATE students
-    SET name = ?,age = ?, gender = ?, city = ?, date_of_birth = ? 
+    SET name = ?,age = ?, gender = ?, city = ?, dob = ? 
     WHERE student_id = ?;
     `;
     return this.repo.query(query, [
@@ -102,7 +107,7 @@ async update(id: number, dto: Partial<updatestd>) {
     dto.age,
     dto.gender,
     dto.city,
-    dto.date_of_birth,
+    dto.dob,
     id,
    ]);
   }
@@ -121,7 +126,7 @@ async update(id: number, dto: Partial<updatestd>) {
     dto.age,
     dto.gender,
     dto.city,
-    dto.date_of_birth,
+    dto.dob,
     id,
   ]);
 }
