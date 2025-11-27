@@ -37,6 +37,8 @@ export class updatestd {
   @IsInt()
   course_id:number;
 
+ 
+  
 }
 
 
