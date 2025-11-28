@@ -11,9 +11,9 @@ import { stdservice } from './students/studentsform/newstudent.service';
 import { stdcontroller } from './students/studentsform/newstudents.controller';
 import { fileservice } from './students/uploads/file.service';
 import { filecontroller } from './students/uploads/file.controller';
-import { UserController } from './students/Users/user.controller';
-import { UserService } from './students/Users/user.service';
-import { UserModule } from './students/Users/user.module';
+import { UserController } from './Users/user.controller';
+import { UserService } from './Users/user.service';
+import { UserModule } from './Users/user.module';
 
 @Module({
   imports: [
