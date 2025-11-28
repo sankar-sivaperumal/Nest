@@ -1,9 +1,10 @@
-import { Type } from 'class-transformer';
+
 import { IsOptional, IsString, IsInt, IsDateString, IsDecimal, IsNumber,IsNotEmpty } from 'class-validator';
-import { Enrollment } from 'src/enrollments/enrollments.entity';
+
 
 
 export class updatestd {
+
   @IsOptional()
   @IsString()
   name: string;
@@ -22,15 +23,15 @@ export class updatestd {
 
   @IsOptional()
   @IsDateString()
-  dob: string;
+  date_of_birth: string;
 
   @IsInt()
   @IsOptional()
   enrollement_id:number;
   
-  @Type(() => Number)
+
   @IsOptional()
-  @IsNumber()
+  @IsDecimal()
   marks: number;
 
   @IsOptional()
