@@ -3,6 +3,7 @@ import { Type } from "class-transformer";
 import { IsInt, IsNotEmpty, IsString, IsDateString, IsOptional, IsDecimal } from "class-validator";
 
 export class userDto {
+    
     @IsString()
     @IsNotEmpty()
     name: string;
@@ -16,32 +17,34 @@ export class userDto {
     @IsNotEmpty()
     gender: string;
 
-    @IsOptional()
+    @IsOptional()git 
     @IsString()
     city: string;
 
     @IsNotEmpty()
     @IsDateString()
-    dob: string; 
+    date_of_birth: string; 
 
     @Type(() => Number)
     @IsOptional()
     @IsInt()
     course_id: number;
 
-    @IsOptional()
-    @IsString()
-    course_name: string;
+    // @IsOptional()
+    // @IsString()
+    // course_name: string;
 
-    @IsOptional()
-    @IsString()
-    teacher_name: string;
-
+    // @IsOptional()
+    // @IsString()
+    // teacher_name: string;
    
     @IsOptional()
     @IsDecimal()
     marks: number;
    
+    @IsOptional()
+    @IsString()
+    files:string[];
 }
 
   
