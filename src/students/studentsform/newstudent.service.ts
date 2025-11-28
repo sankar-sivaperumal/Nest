@@ -16,6 +16,7 @@ export class stdservice {
       ...createStudentDto,
       files: files?.map(file => file.filename) || [],
     });
+    console.log(createStudentDto)
     return this.stdrepo.save(student);
   }
 
