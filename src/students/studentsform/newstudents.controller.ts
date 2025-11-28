@@ -1,16 +1,18 @@
-import { Controller, Post, Body, UseInterceptors, UploadedFiles, UsePipes, ValidationPipe } from '@nestjs/common';
-import { AnyFilesInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { stdservice } from './newstudent.service';
+import { Controller, Post, Body, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { stdservice } from '../studentsform/newstudent.service';
 import { stddto } from './std.dto';
 
 @Controller('students')
 export class stdcontroller {
-  constructor(private readonly studentsServices: stdservice) {}
+  constructor(private readonly studentservice: stdservice) {}
 
- @Post('form')
- @UseInterceptors(AnyFilesInterceptor()) 
- @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
- async create(@Body() createStudentDto: stddto, @UploadedFiles() files: Express.Multer.File[]) {
-  return  await this.studentsServices.create(createStudentDto);
+  @Post('form')
+  @UseInterceptors(AnyFilesInterceptor({ dest: './files' })) 
+  async create(
+    @Body() createStudentDto: stddto,
+    @UploadedFiles() files: Express.Multer.File[],
+  ) {
+    return this.studentservice.create(createStudentDto, files);
   }
 }
