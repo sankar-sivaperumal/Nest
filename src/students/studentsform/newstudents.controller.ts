@@ -13,6 +13,7 @@ export class stdcontroller {
     @Body() createStudentDto: stddto,
     @UploadedFiles() files: Express.Multer.File[],
   ) {
+    console.log(createStudentDto)
     return this.studentservice.create(createStudentDto, files);
   }
 }
