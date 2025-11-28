@@ -3,6 +3,7 @@ import { Type } from "class-transformer";
 import { IsInt, IsNotEmpty, IsString, IsDateString, IsOptional, IsDecimal } from "class-validator";
 
 export class StudentDto {
+    
     @IsString()
     @IsNotEmpty()
     name: string;
@@ -22,7 +23,7 @@ export class StudentDto {
 
     @IsNotEmpty()
     @IsDateString()
-    dob: string; 
+    date_of_birth: string; 
 
     @Type(() => Number)
     @IsOptional()
