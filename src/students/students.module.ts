@@ -9,8 +9,8 @@ import { stdservice } from './studentsform/newstudent.service';
 import { stdcontroller } from './studentsform/newstudents.controller';
 import { fileservice } from './uploads/file.service';
 import { filecontroller } from './uploads/file.controller';
-import { UserController } from 'src/students/Users/user.controller';
-import { UserService } from 'src/students/Users/user.service';
+import { UserController } from 'src/Users/user.controller';
+import { UserService } from 'src/Users/user.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Student,Enrollment,Course])],
