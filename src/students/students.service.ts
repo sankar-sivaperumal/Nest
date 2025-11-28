@@ -59,7 +59,7 @@ export class StudentsService
     return await this.repo.query(query,[gender])
     }
 
-
+// Create a Records
 async create(dto: StudentDto) {
   if (!dto.course_id) {
         throw new Error(`Course ID must be provided ID Must Be (101 - 105 )
@@ -70,8 +70,8 @@ async create(dto: StudentDto) {
           105 - "English"`);
   }
   const { insertId: student_id } = await this.repo.query(
-    `INSERT INTO students (name, age, gender, city, dob) VALUES (?, ?, ?, ?, ?)`,
-    [dto.name, dto.age, dto.gender, dto.city, dto.dob]
+    `INSERT INTO students (name, age, gender, city, date_of_birth) VALUES (?, ?, ?, ?, ?)`,
+    [dto.name, dto.age, dto.gender, dto.city, dto.date_of_birth]
   );
 
   const { insertId: enrollment_id } = await this.epo.query(
@@ -86,20 +86,19 @@ async create(dto: StudentDto) {
      WHERE e.enrollment_id = ?`,
     [enrollment_id]
   );
-
   return { student_id, enrollments: [{ enrollment_id, marks: dto.marks }], courses };
 }
 
 // patch method
 async update(id: number, dto: Partial<updatestd>) {
   return this.repo.update(id, dto); 
-}
+} 
 
 /* //Patch method
   async update(id: number, dto:updatestd) {
     const query = `
     UPDATE students
-    SET name = ?,age = ?, gender = ?, city = ?, dob = ? 
+    SET name = ?,age = ?, gender = ?, city = ?, date_of_birth = ? 
     WHERE student_id = ?;
     `;
     return this.repo.query(query, [
@@ -107,7 +106,7 @@ async update(id: number, dto: Partial<updatestd>) {
     dto.age,
     dto.gender,
     dto.city,
-    dto.dob,
+    dto.date_of_birth,
     id,
    ]);
   }
@@ -120,18 +119,17 @@ async update(id: number, dto: Partial<updatestd>) {
     SET name = ?, age = ?, gender = ?, city = ?, date_of_birth = ?
     WHERE student_id = ?
   `;
-
-  return this.repo.query(query, [
+    return this.repo.query(query, [
     dto.name,
     dto.age,
     dto.gender,
     dto.city,
-    dto.dob,
+    dto.date_of_birth,
     id,
   ]);
 }
 
-
+//  Delete Records
   async delete(id: number) {
     const query = `
       DELETE FROM students
@@ -139,5 +137,4 @@ async update(id: number, dto: Partial<updatestd>) {
     `;
     return this.repo.query(query, [id]);
   }
-}
-
+} 
