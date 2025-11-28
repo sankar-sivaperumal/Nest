@@ -1,54 +1,97 @@
-
-//  import { Injectable } from '@nestjs/common';
-// import { userDto } from '../dto/student.dto';
-// import { plainToInstance } from 'class-transformer';
-// import { validate } from 'class-validator';
-// import { userDto} from './user.dto';
-
-// @Injectable()
-// export class UserService {
-//   async createUser(input: userDto): Promise<userDto> {
-  
-//     const userDto = plainToInstance(userDto, input);
-//     const errors = await validate(userDto);
-
-//     if (errors.length > 0) {
-//       throw new Error('Invalid input data');
-//     }
-
-//     return userDto;
-//   }
-// }
-
-import { Injectable, BadRequestException } from '@nestjs/common';
-import { StudentDto } from '../students/dto/student.dto'
-import { Student } from '../students/student.entity';
-import { plainToInstance } from 'class-transformer';
-import { validate } from 'class-validator';
+import { Injectable } from '@nestjs/common';
+import { userDto } from './user.dto';
+import { StudentDto } from 'src/students/dto/student.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Student } from 'src/students/student.entity';
 
 @Injectable()
 export class UserService {
-  async createUser(input: any): Promise<StudentDto> {
-  
-    const userDto = plainToInstance(StudentDto, input);
+    constructor(
+      @InjectRepository(Student)
+      private userrepo: Repository<Student>,
+    ) {}
+  private user(input: any): userDto {
+    const dto = new userDto();
+    dto.name = input.name;
+    dto.age = input.age;
+    dto.gender = input.gender;
+    dto.date_of_birth = input.date_of_birth;
+    dto.city = input.city;
+    dto.course_id = input.course_id;
+    dto.marks = input.marks;
+    dto.files = input.files;
+    return dto;
+  }
 
-  
-    const errors = await validate(userDto);
-    if (errors.length > 0) {
-      const messages = errors
-        .map(err => Object.values(err.constraints || {}).join(', '))
-        .join('; ');
-      throw new BadRequestException(`Validation failed: ${messages}`);
-    }
+  // async createUser(input: any, files: Express.Multer.File[]): Promise<userDto> {
+  //   const createdUserDto = this.user(input);
+  //   console.log(createdUserDto);
+  //   return createdUserDto
 
-   
-    const studentEntity = new Student();
-    Object.keys(userDto).forEach((key) => {
-      if (userDto[key] !== undefined) {
-        studentEntity[key] = userDto[key];
-      }
+
+   async createUser(input: any, files: Express.Multer.File[]): Promise<userDto> {
+  const student = this.userrepo.create({ ...input, files });
+  const savedStudent = await this.userrepo.save(student);
+  return this.createUser(savedStudent,files);
+}
+  }
+
+ 
+
+
+/* @Injectable()
+export class UserService {
+  constructor(
+    @InjectRepository(Student)
+    private userrepo: Repository<Student>,
+  ) {}
+
+  async createUser(input: userDto, files: Express.Multer.File[]) {
+  
+    const fileNames = files?.map(f => f.filename) ?? [];
+
+      const userEntity = this.userrepo.create({
+      ...input,
+      files: fileNames, 
     });
 
-    return userDto;
+      const savedUser = await this.userrepo.save(userEntity);
+
+    return savedUser; 
   }
 }
+ */
+
+
+/* import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Student } from '../students/student.entity';
+import { StudentDto } from '../students/dto/student.dto';
+
+@Injectable()
+export class UserService {
+  constructor(
+    @InjectRepository(Student)
+    private readonly studentRepository: Repository<Student>,
+  ) {}
+
+  async createUser(
+    input: StudentDto,
+    file?: Express.Multer.File[],
+  ): Promise<Student> {
+    const student = this.studentRepository.create({
+      ...input,
+      file: file?.map((file) => ({
+        filename: file.originalname,
+        path: file.path,
+      })),
+    });
+
+    const savedStudent = await this.studentRepository.save(student);
+
+    return savedStudent; 
+  }
+}
+ */
