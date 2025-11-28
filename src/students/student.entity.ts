@@ -20,7 +20,7 @@ export class Student {
   city?: string;
 
   @Column({ type: 'date', nullable: false })
-  dob: Date;
+  date_of_birth: Date;
 
 
   @Column('simple-array', { nullable: true })
