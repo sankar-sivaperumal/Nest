@@ -1,62 +1,41 @@
-
-//  import { Controller, Post, Body, BadRequestException, ValidationPipe, UsePipes } from '@nestjs/common';
-//  import { UserService } from './user.service';
-//  import { StudentDto } from '../dto/student.dto';
-
-//  @Controller('students')
-//  export class UserController {
-//    constructor(private readonly userService: UserService) {}
-
-//    @UsePipes(new ValidationPipe({ 
-//      transform: true, 
-//      whitelist: true,         
-//      forbidNonWhitelisted: true 
-//    }))
-  
-//    @Post('user')
-//    async createUser(@Body() body: StudentDto) {
-//     try {
-//       const userDto = await this.userService.createUser(body);
-//       return userDto
-//      } 
-//      catch (error) {
-//        throw new BadRequestException('An internal server error occurred.');
-//      }
-//    }
-// }
-
-import { Controller, Post, Body, UsePipes, ValidationPipe, BadRequestException, UseInterceptors, UploadedFile } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { StudentDto } from '../students/dto/student.dto'
+import { Controller,  Post,  Body,  UploadedFiles,  UseInterceptors,  UsePipes,  ValidationPipe,  BadRequestException,} from '@nestjs/common';
+import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { UserService } from './user.service';
+import { userDto } from './user.dto';
+import { StudentDto } from 'src/students/dto/student.dto';
+import * as fs from 'fs';
 
 @Controller('students')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('user')
-  @UseInterceptors(FileInterceptor('file')) 
+  @UseInterceptors(AnyFilesInterceptor({ dest: './files' }))
   @UsePipes(
     new ValidationPipe({
-      transform: true,               
-      whitelist: true,               
-      forbidNonWhitelisted: true,    
-      exceptionFactory: (errors) => {
-        const allowedFields = Object.keys(new StudentDto()).join(', ');
-        return new BadRequestException(`Invalid fields provided. Allowed fields: ${allowedFields}`);
-      },
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
     }),
   )
-  async createUser(
-    @Body() body: any,            
-    @UploadedFile() file?: Express.Multer.File
+  async create(
+    @Body() body: userDto,
+    @UploadedFiles() files: Express.Multer.File[],
   ) {
     try {
+    for (const file of files) {
     
-      const userDto = await this.userService.createUser(body);
-      return userDto;
+        if (!fs.existsSync(file.path)) {
+          throw new BadRequestException('Folder not accessible.');
+        }
+      }
+      return await this.userService.createUser(body, files);
     } catch (error) {
-      throw new BadRequestException(error.message || 'An internal server error occurred.');
-    }
+      throw new BadRequestException(error.message);
+    }   
   }
 }
+ 
+
+
+
