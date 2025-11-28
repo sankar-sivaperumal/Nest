@@ -27,9 +27,10 @@ export class stddto {
     @IsInt()
     course_id: number;
 
+    
     @IsOptional()
     @IsDecimal()    
-    marks: number;
+    marks?: number;
 
     @IsOptional()
     @IsString({ each: true })
