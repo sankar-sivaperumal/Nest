@@ -19,23 +19,13 @@ export class stddto {
     @IsString()
     city: string;
 
-   
     @IsDateString()
-    dob: string; 
+    date_of_birth: string; 
 
     @Type(() => Number)
     @IsOptional()
     @IsInt()
     course_id: number;
-
-    // @IsOptional()
-    // @IsString()
-    // course_name: string;
-
-    // @IsOptional()
-    // @IsString()
-    // teacher_name: string;
-
 
     @IsOptional()
     @IsDecimal()    
