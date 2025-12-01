@@ -16,7 +16,7 @@ import { UserService } from 'src/Users/user.service';
   imports: [TypeOrmModule.forFeature([Student,Enrollment,Course])],
   providers: [StudentsService,stdservice,fileservice,UserService],
   controllers: [StudentsController,stdcontroller,filecontroller,UserController],
-  exports: [StudentsService,TypeOrmModule],
+  exports: [StudentsService,TypeOrmModule,UserService],
 })
   
 export class StudentsModule {}
