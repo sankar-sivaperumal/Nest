@@ -12,6 +12,7 @@ import { Student } from 'src/students/student.entity';
     TypeOrmModule.forFeature([Student,Enrollment])],
 
   controllers: [EnrollmentsController],
-  providers: [EnrollmentsService]
+  providers: [EnrollmentsService],
+  exports: [TypeOrmModule],
 })
 export class EnrollmentsModule {}
