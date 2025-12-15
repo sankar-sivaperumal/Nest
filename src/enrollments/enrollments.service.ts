@@ -20,11 +20,11 @@
     }
 
    findAll() {
-     return this.epo.find({ relations: ['student'] });
+     return this.epo.find({ relations: ['students'] });
    }
 
    findOne(id: number) {
-     return this.epo.findOne({ where: { enrollment_id: id }, relations: ['student'] });
+     return this.epo.findOne({ where: { enrollment_id: id }, relations: ['students'] });
    }
 
    update(id: number, patch: Partial<Enrollment>) {
