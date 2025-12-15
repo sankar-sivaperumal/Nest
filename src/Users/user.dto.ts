@@ -1,7 +1,5 @@
-
 import { Type } from "class-transformer";
-import { IsInt, IsNotEmpty, IsString, IsDateString, IsOptional, IsDecimal } from "class-validator";
-
+import {   IsInt, IsNotEmpty, IsString, IsDateString, IsOptional, IsNumber, IsArray } from "class-validator";
 
 export class userDto {
     
@@ -18,28 +16,26 @@ export class userDto {
     @IsNotEmpty()
     gender: string;
 
-    @IsOptional()git 
+    @IsOptional()
     @IsString()
-    city: string;
+    city?: string;
 
     @IsNotEmpty()
     @IsDateString()
     date_of_birth: string; 
 
-    @Type(() => Number)
     @IsOptional()
+    @Type(() => Number)
     @IsInt()
-    course_id: number;
+    course_id?: number;
 
     @IsOptional()
-    @IsDecimal()
-    marks: number;
+    @Type(() => Number)
+    @IsNumber()
+    marks?: number;
    
     @IsOptional()
-    @IsString()
-    files:string[];
+    @IsArray()
+    @IsString({ each: true })
+    files?: string[];
 }
-
-
-			
-
