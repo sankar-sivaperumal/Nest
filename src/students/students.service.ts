@@ -18,14 +18,40 @@ export class StudentsService
     @InjectRepository(Course) private cro:Repository<Course>,) {}
 
 
-  async findAll() {
+/*   async findAll() {
     const query = `
       SELECT s.*, e.enrollment_id, e.marks
       FROM students s
       LEFT JOIN enrollments e ON e.student_id = s.student_id
     `;
     return this.repo.query(query);
-  }
+  } */
+ async findAll(page: number, limit: number) {
+  const offset = (page - 1) * limit;
+
+  const data = await this.repo.query(
+    `
+    SELECT s.*, e.enrollment_id, e.marks
+    FROM students s
+    LEFT JOIN enrollments e ON e.student_id = s.student_id
+    ORDER BY s.student_id
+    LIMIT ? OFFSET ?
+    `,
+    [limit, offset]
+  );
+
+  const total = await this.repo.query(
+    `SELECT COUNT(*) as total FROM students`
+  );
+
+  return {
+    data,
+    total: total[0].total,
+    page,
+    limit,
+  };
+}
+
 
 // async findAll(gender?: string) {
    
