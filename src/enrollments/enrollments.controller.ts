@@ -1,10 +1,7 @@
-import { Body, Controller, Delete, Get,Param, Patch, Post, Put,} from '@nestjs/common';
-import { Response } from 'express'; 
-import { EnrollmentsDto } from './dto/enrollments.dto'; 
+import { Body, Controller, Delete, Get,Param, Patch, Post, Put, Query,} from '@nestjs/common';
 import { EnrollmentsService } from './enrollments.service';
 import { Enrollment } from './enrollments.entity';
-import { CLIENT_RENEG_LIMIT } from 'tls';
-import { log } from 'console';
+
 
 
 @Controller('enrollments')
@@ -18,9 +15,12 @@ export class EnrollmentsController {
   }
 
   @Get()
-  findAll() {
-    console.log("value geted")
-    return this.evc.findAll();
+  async findAll(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    const result = await this.evc.findAll(page, limit);
+    return result;  
   }
 
   @Get(':id')
