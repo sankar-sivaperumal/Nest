@@ -9,10 +9,14 @@ export class StudentsController {
   constructor(  private readonly svc: StudentsService){}
    
   // Get All Students Record
-  @Get()
-  async findAll(): Promise<StudentDto[]> {
-    return  await this.svc.findAll();
-  }
+@Get()
+async findAll(
+  @Query('page') page = 1,
+  @Query('limit') limit = 10,
+) {
+  return await this.svc.findAll(+page, +limit);
+}
+
 
   // Get By Gender
     @Get('gender')
