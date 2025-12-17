@@ -1,4 +1,4 @@
- import { Injectable, NotFoundException } from '@nestjs/common';
+ import { Injectable } from '@nestjs/common';
  import { Enrollment } from './enrollments.entity';
  import { InjectRepository } from '@nestjs/typeorm';
  import { Repository } from 'typeorm';
@@ -12,16 +12,19 @@
    ) {}
 
     
-    async create(enrollment: Partial<Enrollment>): Promise<Student> {
-     const { students } = enrollment;
-    
-    return new  Student;
- 
-    }
+  async create(enrollment: Partial<Enrollment>): Promise<Student> {
+  const { students } = enrollment;
+  return new  Student;
+  }
 
-   findAll() {
-     return this.epo.find({ relations: ['students'] });
-   }
+  async findAll(page: number = 1, limit: number = 10) {
+    const [data, total] = await this.epo.findAndCount({
+      relations: ['students'],
+      skip: (page - 1) * limit, 
+      take: limit, 
+    });
+    return { data, total }; 
+  }
 
    findOne(id: number) {
      return this.epo.findOne({ where: { enrollment_id: id }, relations: ['students'] });
