@@ -18,53 +18,54 @@ export class StudentsService
     @InjectRepository(Course) private cro:Repository<Course>,) {}
 
 
-/*   async findAll() {
+  async findAll(
+    page: number,
+    limit: number,
+    sortField?: keyof Student,
+    sortOrder: "asc" | "desc" = "asc",
+    filters?: Partial<Record<keyof Student, string>>
+  ) {
+    const offset = (page - 1) * limit;
+    const params: any[] = [];
+
+    // Build WHERE clause dynamically
+    const where = filters
+      ? Object.entries(filters)
+          .filter(([_, value]) => value)
+          .map(([key, value]) => {
+            params.push(`%${value}%`);
+            return `s.${key} LIKE ?`;
+          })
+          .join(" AND ")
+      : "";
+
+    const whereClause = where ? `WHERE ${where}` : "";
+
+    // Build ORDER BY clause
+    const orderClause = sortField ? `ORDER BY s.${sortField} ${sortOrder.toUpperCase()}` : `ORDER BY s.student_id ASC`;
+
+    // Main query with JOIN and pagination
     const query = `
       SELECT s.*, e.enrollment_id, e.marks
       FROM students s
       LEFT JOIN enrollments e ON e.student_id = s.student_id
+      ${whereClause}
+      ${orderClause}
+      LIMIT ? OFFSET ?
     `;
-    return this.repo.query(query);
-  } */
- async findAll(page: number, limit: number) {
-  const offset = (page - 1) * limit;
+    params.push(limit, offset);
 
-  const data = await this.repo.query(
-    `
-    SELECT s.*, e.enrollment_id, e.marks
-    FROM students s
-    LEFT JOIN enrollments e ON e.student_id = s.student_id
-    ORDER BY s.student_id
-    LIMIT ? OFFSET ?
-    `,
-    [limit, offset]
-  );
+    const data = await this.repo.query(query, params);
 
-  const total = await this.repo.query(
-    `SELECT COUNT(*) as total FROM students`
-  );
+    // Count total records with same filters
+    const countParams = params.slice(0, params.length - 2); // exclude limit & offset
+    const countQuery = `SELECT COUNT(*) as total FROM students s ${whereClause}`;
+    const totalResult = await this.repo.query(countQuery, countParams);
+    const total = totalResult[0]?.total || 0;
 
-  return {
-    data,
-    total: total[0].total,
-    page,
-    limit,
-  };
-}
+    return { data, total, page, limit };
+  }
 
-
-// async findAll(gender?: string) {
-   
-//     let query = `
-//       SELECT s.*, e.enrollment_id, e.marks
-//       FROM students s
-//       LEFT JOIN enrollments e ON e.student_id = s.student_id
-//     `;
-//     if (gender) {
-//       query += ` WHERE s.gender = ?`;  
-//     }
-//     return await this.repo.query(query, gender ? [gender] : []);
-//   }
 
 
   async findOne(id: number) {
@@ -116,11 +117,11 @@ async create(dto: StudentDto) {
 }
 
 // patch method
-async update(id: number, dto: Partial<updatestd>) {
+/* async update(id: number, dto: Partial<updatestd>) {
   return this.repo.update(id, dto); 
-} 
+}  */
 
-/* //Patch method
+///Patch method
   async update(id: number, dto:updatestd) {
     const query = `
     UPDATE students
@@ -136,7 +137,7 @@ async update(id: number, dto: Partial<updatestd>) {
     id,
    ]);
   }
-*/
+
    
 // Put method
   async updates(id: number, dto: StudentDto) {
@@ -163,4 +164,10 @@ async update(id: number, dto: Partial<updatestd>) {
     `;
     return this.repo.query(query, [id]);
   }
-} 
+
+
+
+
+}
+
+
