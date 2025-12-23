@@ -11,12 +11,15 @@ import { fileservice } from './uploads/file.service';
 import { filecontroller } from './uploads/file.controller';
 import { UserController } from 'src/Users/user.controller';
 import { UserService } from 'src/Users/user.service';
+import { AuthModule } from 'src/auth/auth.module'; 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Student,Enrollment,Course])],
-  providers: [StudentsService,stdservice,fileservice,UserService],
-  controllers: [StudentsController,stdcontroller,filecontroller,UserController],
-  exports: [StudentsService,TypeOrmModule,UserService],
+  imports: [
+    TypeOrmModule.forFeature([Student, Enrollment, Course]),
+    AuthModule,
+  ],
+  providers: [StudentsService, stdservice, fileservice, UserService],
+  controllers: [StudentsController, stdcontroller, filecontroller, UserController],
+  exports: [StudentsService, TypeOrmModule, UserService],
 })
-  
 export class StudentsModule {}
