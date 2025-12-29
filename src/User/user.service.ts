@@ -15,13 +15,13 @@ export class UserService {
   async register(email: string, password: string) {
     const hashed = await bcrypt.hash(password, 12);  // Hashing the password before saving
     const user = this.repo.create({ email, password: hashed });
-    return this.repo.save(user);  // Save the user to the database
+    return this.repo.save(user);  // Save the user to db
   }
 
 // Find a user by their email
 async findByEmail(email: string) {
   return this.repo.findOne({ 
-    where: { email },
+    where: { email : email.trim().toLowerCase()},
     select: ['id', 'email', 'password'] 
   });
 }
