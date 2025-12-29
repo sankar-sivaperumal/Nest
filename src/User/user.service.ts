@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./user.enitity";
@@ -25,5 +25,14 @@ async findByEmail(email: string) {
     select: ['id', 'email', 'password'] 
   });
 }
+
+async findById(id: number) {
+  return this.repo.findOne({ where: { id } });
+}
+
+async updatePassword(id: number, password: string) {
+  await this.repo.update(id, { password });
+}
+
 
 }
